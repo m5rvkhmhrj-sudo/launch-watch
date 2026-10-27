@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Watch</title>
+<meta name="description" content="SharkNinja retail intelligence work sample. 1,944 reviews and 4 retail shelves, analyzed from public data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23141414'/%3E%3Cpath d='M14 44 L26 28 L34 36 L50 16' stroke='%2333785D' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eeebe6; --card:#fcfcfb; --ink:#141414; --ink-2:#52514e; --ink-3:#8a877f;
+  --line:#dcd8d0; --accent:#33785d; --accent-soft:#e3ece7;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --bad:#c0392b;
+  --head:"Plus Jakarta Sans",arial,helvetica,sans-serif;
+  --body:"DM Sans",arial,helvetica,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131312; --card:#1a1a19; --ink:#f0efec; --ink-2:#c3c2b7; --ink-3:#8f8d84;
+    --line:#33322f; --accent:#4e9a7b; --accent-soft:#1f2d27;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --bad:#e66767;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131312; --card:#1a1a19; --ink:#f0efec; --ink-2:#c3c2b7; --ink-3:#8f8d84;
+  --line:#33322f; --accent:#4e9a7b; --accent-soft:#1f2d27;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --bad:#e66767;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1060px;margin:0 auto;padding:28px 16px 64px}
+header.masthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:6px}
+.brand{font-family:var(--head);font-weight:800;font-size:30px;letter-spacing:-.5px}
+.brand .tick{color:var(--accent)}
+.kicker{font-size:13px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.14em}
+.byline{font-size:14px;color:var(--ink-2);margin:10px 0 22px}
+.byline b{color:var(--ink)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tabs button{font-family:var(--head);font-weight:700;font-size:14px;letter-spacing:.02em;border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:9px 18px;border-radius:999px;cursor:pointer}
+.tabs button.on{background:var(--ink);color:var(--card)}
+.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:18px}
+h2{font-family:var(--head);font-weight:800;font-size:21px;margin:0 0 4px}
+h3{font-family:var(--head);font-weight:700;font-size:16px;margin:0 0 10px}
+.sub{color:var(--ink-2);font-size:14px;margin:0 0 16px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.tile{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px}
+.tile .n{font-family:var(--head);font-weight:800;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .l{font-size:13px;color:var(--ink-2);margin-top:3px}
+.tile.warn{border-left-color:var(--bad)}
+svg text{font-family:var(--body)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin:4px 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-family:var(--head);font-size:12.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);border-bottom:2px solid var(--ink);padding:8px 10px}
+td{border-bottom:1px solid var(--line);padding:9px 10px}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.pill.bad{background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+.quote{border-left:3px solid var(--line);padding:4px 14px;margin:12px 0;color:var(--ink-2);font-size:14.5px}
+.quote b{color:var(--ink);font-weight:600}
+.quote .meta{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.rec{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.rec:last-child{border-bottom:none}
+.rec .no{font-family:var(--head);font-weight:800;font-size:18px;color:var(--accent);flex:none;width:26px}
+.rec p{margin:2px 0 0;font-size:14.5px;color:var(--ink-2)}
+.rec h4{margin:0;font-family:var(--head);font-size:15px}
+footer{margin-top:28px;font-size:12.5px;color:var(--ink-3);line-height:1.6;border-top:1px solid var(--line);padding-top:14px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--card);font-size:12.5px;padding:6px 10px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:9;max-width:240px}
+.module{display:none}.module.on{display:block}
+.src{font-size:12px;color:var(--ink-3);margin-top:10px}
+@media(max-width:620px){.brand{font-size:24px}.card{padding:16px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brand">LAUNCH<span class="tick">/</span>WATCH</div>
+    <div class="kicker">SharkNinja retail intelligence · built from public data</div>
+  </header>
+  <p class="byline">A work sample for the <b>Applied AI &amp; Analytics Co-op</b> by <b>Bill Enright</b> · 1,944 reviews read, 4 retail shelves audited · October 27, 2026</p>
+
+  <nav class="tabs" role="tablist">
+    <button class="on" data-m="reviews" role="tab">Review Intelligence</button>
+    <button data-m="shelf" role="tab">Shelf Audit</button>
+    <button data-m="method" role="tab">Methodology</button>
+  </nav>
+
+  <!-- REVIEWS -->
+  <section class="module on" id="m-reviews">
+    <div class="tiles">
+      <div class="tile"><div class="n">1,944</div><div class="l">review texts analyzed (Best Buy, 6 launches)</div></div>
+      <div class="tile"><div class="n">14,000+</div><div class="l">Amazon and Walmart ratings cross-checked</div></div>
+      <div class="tile warn"><div class="n">0.4&#9733;</div><div class="l">rating gap: same products, Best Buy vs Amazon</div></div>
+      <div class="tile warn"><div class="n">41%</div><div class="l">of Creami negatives cite reliability or returns, not the ice cream</div></div>
+    </div>
+
+    <div class="card">
+      <h2>The channel rating gap</h2>
+      <p class="sub">Average star rating for the same product, by retailer. The products are fine. The Amazon and Walmart experience is where stars are lost.</p>
+      <div class="legend" id="leg-gap"></div>
+      <div id="chart-gap"></div>
+      <div class="src">Hover any dot for the rating and sample size.</div>
+    </div>
+
+    <div class="card">
+      <h2>Why people leave 1 to 3 stars</h2>
+      <p class="sub">Theme frequency across all 109 negative Creami-family reviews at Best Buy. A review can hit more than one theme.</p>
+      <div id="chart-themes"></div>
+      <h3 style="margin-top:18px">In their words</h3>
+      <div class="quote"><b>&ldquo;Hazard&rdquo;</b> &mdash; &ldquo;Machine broke after about 10 uses. Started smoking and melted through plastic into ice cream.&rdquo;<div class="meta">CREAMi Deluxe · 1 star · Apr 2025 · flagged for quality triage</div></div>
+      <div class="quote"><b>&ldquo;Dead in under ten uses&rdquo;</b> &mdash; &ldquo;Only had it 6 months and it&rsquo;s fried and only used a handful of times.&rdquo;<div class="meta">CREAMi Deluxe · 2 stars · Mar 2025</div></div>
+      <div class="quote"><b>&ldquo;Horrible&rdquo;</b> &mdash; &ldquo;My machine stopped working and I cannot return it.&rdquo;<div class="meta">CREAMi Deluxe · 1 star · Oct 2024 · service friction, not product quality</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Launch scorecard</h2>
+      <p class="sub">Best Buy review corpus per product. Negative = rated 3 stars or less.</p>
+      <table>
+        <thead><tr><th>Product</th><th class="num">Reviews</th><th class="num">Avg &#9733;</th><th class="num">Negative</th><th>Read</th></tr></thead>
+        <tbody id="scorecard"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SHELF -->
+  <section class="module" id="m-shelf">
+    <div class="tiles">
+      <div class="tile warn"><div class="n">$80.99</div><div class="l">price spread on the base CREAMi across 4 retailers</div></div>
+      <div class="tile warn"><div class="n">$100</div><div class="l">price spread on SLUSHi, the most viral SKU</div></div>
+      <div class="tile"><div class="n">$0.99</div><div class="l">spread on Scoop &amp; Swirl. This is what alignment looks like</div></div>
+      <div class="tile warn"><div class="n">3.8&#9733;</div><div class="l">refurb and bundle listings ranking top-5 in Walmart search</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Same machine, four prices</h2>
+      <p class="sub">Live listed price by retailer, October 27, 2026. Each dot is a retailer; the bar is the spread.</p>
+      <div class="legend" id="leg-price"></div>
+      <div id="chart-price"></div>
+    </div>
+
+    <div class="card">
+      <h2>Price table</h2>
+      <table>
+        <thead><tr><th>Product</th><th class="num">Amazon</th><th class="num">Walmart</th><th class="num">Best Buy</th><th class="num">Target</th><th class="num">Spread</th></tr></thead>
+        <tbody>
+          <tr><td>CREAMi (base / original)</td><td class="num">$197.99</td><td class="num">$149.00</td><td class="num">$229.99</td><td class="num">$229.99</td><td class="num"><span class="pill bad">$80.99</span></td></tr>
+          <tr><td>CREAMi Deluxe</td><td class="num">$249.95</td><td class="num">refurb only</td><td class="num">$249.99</td><td class="num">$249.99</td><td class="num"><span class="pill">$0.04</span></td></tr>
+          <tr><td>CREAMi Scoop &amp; Swirl</td><td class="num">$279.00</td><td class="num">$279.00</td><td class="num">$279.99</td><td class="num">&mdash;</td><td class="num"><span class="pill">$0.99</span></td></tr>
+          <tr><td>SLUSHi (72 oz)</td><td class="num">$299.00</td><td class="num">$199.00</td><td class="num">&mdash;</td><td class="num">$299.99*</td><td class="num"><span class="pill bad">$100.99</span></td></tr>
+          <tr><td>SLUSHi XL (128 oz)</td><td class="num">$349.99</td><td class="num">$349.00</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num"><span class="pill">$0.99</span></td></tr>
+        </tbody>
+      </table>
+      <div class="src">*Target carries the 88 oz SLUSHi at $299.99; closest comparable listing. SharkNinja.com lists Scoop &amp; Swirl at $279.99, marked down from $349.99.</div>
+    </div>
+
+    <div class="card">
+      <h2>Shelf hygiene flags</h2>
+      <div class="rec"><div class="no">!</div><div><h4>Walmart search puts 3.8-star listings above your heroes</h4><p>A third-party bundle (3.8&#9733;, 119 reviews) and a "Restored" unit (3.8&#9733;, 398 reviews) rank in the top five results for "ninja creami," above the 4.5-star NC301. First impression damage on the retailer with your biggest review volume.</p></div></div>
+      <div class="rec"><div class="no">!</div><div><h4>The $149 Walmart CREAMi undercuts every other channel by 24 to 35 percent</h4><p>If it is a planned rollback, Amazon and Target shoppers are seeing a worse deal on the same franchise entry point. If it is not planned, it is a price-integrity gap worth a conversation with the marketplace team.</p></div></div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="module" id="m-method">
+    <div class="card">
+      <h2>How this was built</h2>
+      <p class="sub">One agentic pipeline, public data only, built in an afternoon with Claude Code.</p>
+      <div class="rec"><div class="no">1</div><div><h4>Collect</h4><p>Pulled all 1,944 customer reviews (full text, rating, date) for six 2024 to 2026 SharkNinja launches from Best Buy's public review API, plus live price, rating, and rank data from Amazon, Walmart, and Target product and search pages, and SharkNinja.com first-party pricing.</p></div></div>
+      <div class="rec"><div class="no">2</div><div><h4>Classify</h4><p>Clustered every negative review (3 stars or less) into complaint themes with a transparent keyword rubric. Every count on this page can be re-derived from the raw corpus; nothing is a black box.</p></div></div>
+      <div class="rec"><div class="no">3</div><div><h4>Compare</h4><p>Cross-checked Best Buy sentiment against Amazon rating histograms (5,571 ratings on Deluxe alone, 9 percent 1-star) and Walmart ratings to separate product problems from channel-experience problems.</p></div></div>
+      <div class="rec"><div class="no">4</div><div><h4>Recommend</h4><p>The same pipeline, run weekly inside SharkNinja, becomes an early-warning system: safety-language detection routed to quality triage, review-response queues for Amazon, and automated price-integrity alerts. That is the agentic workflow this co-op role describes.</p></div></div>
+      <h3 style="margin-top:16px">Limits, stated plainly</h3>
+      <p class="sub" style="margin-bottom:0">Review text depth comes from one retailer (Best Buy); Amazon and Walmart contribute headline stats, not full text. Prices are a point-in-time snapshot, and promotional rollbacks can explain part of any spread. Theme counts use keyword matching, so phrasing outside the rubric is missed. All of this is fixable with internal data access.</p>
+    </div>
+
+    <div class="card">
+      <h2>Recommendations</h2>
+      <div class="rec"><div class="no">1</div><div><h4>Close the Amazon experience gap</h4><p>Same machines rate 4.7 at Best Buy and 4.3 on Amazon, where 5 to 10 times more shoppers look first. Reliability and return friction, not taste, drive 41 percent of negatives. A review-response and returns-experience push on Amazon is the highest-leverage star you can buy back.</p></div></div>
+      <div class="rec"><div class="no">2</div><div><h4>Auto-triage safety language</h4><p>Reviews like "started smoking and melted through plastic" should reach the quality team the day they post, not whenever someone reads page 14. A classifier on the review feed does this for every SKU, every day.</p></div></div>
+      <div class="rec"><div class="no">3</div><div><h4>Run a standing price-integrity sweep</h4><p>Scoop &amp; Swirl holds a $0.99 spread across channels. The base CREAMi and SLUSHi do not ($80.99 and $100.99). The discipline exists; the monitoring to enforce it everywhere is a small agent away.</p></div></div>
+    </div>
+  </section>
+
+  <footer>
+    Independent work sample by Bill Enright (enright.wi@northeastern.edu). Not affiliated with, commissioned by, or endorsed by SharkNinja.
+    All data from public retail pages on October 27, 2026. Quotes are verbatim customer reviews from BestBuy.com.
+    Format modeled on the McKinsey "In Brief" one-page insight layout, cited among top executive-summary templates by ClickUp.
+  </footer>
+</div>
+<div id="tip" role="status"></div>
+
+<script>
+(function(){
+  "use strict";
+  var css = getComputedStyle(document.documentElement);
+  function v(n){ return css.getPropertyValue(n).trim(); }
+
+  /* tabs */
+  var tabs = document.querySelectorAll('.tabs button');
+  tabs.forEach(function(b){
+    b.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.toggle('on', x === b); });
+      document.querySelectorAll('.module').forEach(function(m){
+        m.classList.toggle('on', m.id === 'm-' + b.dataset.m);
+      });
+    });
+  });
+
+  /* tooltip */
+  var tip = document.getElementById('tip');
+  function showTip(e, text){
+    tip.textContent = text;
+    tip.style.opacity = 1;
+    tip.style.left = Math.min(e.clientX + 12, innerWidth - 250) + 'px';
+    tip.style.top = (e.clientY + 14) + 'px';
+  }
+  function hideTip(){ tip.style.opacity = 0; }
+
+  var RET = ['Amazon','Walmart','Best Buy','Target'];
+  function retColors(){ return [v('--s1'), v('--s2'), v('--s3'), v('--s4')]; }
+
+  function legend(elId){
+    var el = document.getElementById(elId), C = retColors();
+    el.innerHTML = RET.map(function(r, i){
+      return '<span><i style="background:' + C[i] + '"></i>' + r + '</span>';
+    }).join('');
+  }
+
+  /* ---- rating gap dot plot ---- */
+  var gap = [
+    { p:'CREAMi Deluxe',      d:{ 'Amazon':[4.30,5571], 'Best Buy':[4.70,915] } },
+    { p:'CREAMi (original)',  d:{ 'Amazon':[4.50,4312], 'Walmart':[4.50,3415], 'Best Buy':[4.69,395], 'Target':[4.46,null] } },
+    { p:'Scoop & Swirl',      d:{ 'Amazon':[4.30,1910], 'Walmart':[4.20,1017], 'Best Buy':[4.66,289] } },
+    { p:'SLUSHi',             d:{ 'Amazon':[4.60,4800], 'Walmart':[4.50,12986] } },
+    { p:'SLUSHi XL',          d:{ 'Walmart':[4.70,650], 'Best Buy':[4.86,138] } }
+  ];
+  function drawGap(){
+    var C = retColors(), ink = v('--ink'), ink2 = v('--ink-2'), line = v('--line'), card = v('--card');
+    var W = 940, rowH = 52, padL = 150, padR = 30, padT = 26;
+    var H = padT + gap.length * rowH + 34;
+    var x0 = 4.0, x1 = 5.0;
+    function X(val){ return padL + (val - x0) / (x1 - x0) * (W - padL - padR); }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto" role="img" aria-label="Average rating by retailer per product">';
+    for (var t = 4.0; t <= 5.01; t += 0.25) {
+      s += '<line x1="' + X(t) + '" y1="' + padT + '" x2="' + X(t) + '" y2="' + (H - 30) + '" stroke="' + line + '" stroke-width="1"/>' +
+           '<text x="' + X(t) + '" y="' + (H - 12) + '" font-size="12" fill="' + ink2 + '" text-anchor="middle">' + t.toFixed(2) + '</text>';
+    }
+    gap.forEach(function(row, i){
+      var y = padT + i * rowH + rowH / 2;
+      s += '<text x="0" y="' + (y + 4) + '" font-size="13.5" font-weight="600" fill="' + ink + '">' + row.p + '</text>';
+      var vals = Object.keys(row.d).map(function(r){ return row.d[r][0]; });
+      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      s += '<line x1="' + X(lo) + '" y1="' + y + '" x2="' + X(hi) + '" y2="' + y + '" stroke="' + line + '" stroke-width="2"/>';
+      RET.forEach(function(r, k){
+        if (!row.d[r]) return;
+        var val = row.d[r][0], n = row.d[r][1];
+        s += '<circle cx="' + X(val) + '" cy="' + y + '" r="7" fill="' + C[k] + '" stroke="' + card + '" stroke-width="2" data-tip="' + r + ': ' + val.toFixed(2) + ' stars' + (n ? ' (' + n.toLocaleString() + ' ratings)' : '') + '"/>';
+      });
+      if (hi - lo >= 0.3) {
+        s += '<text x="' + (X(hi) + 12) + '" y="' + (y + 4) + '" font-size="12.5" font-weight="700" fill="' + v('--bad') + '">' + (hi - lo).toFixed(2) + ' gap</text>';
+      }
+    });
+    s += '</svg>';
+    document.getElementById('chart-gap').innerHTML = s;
+  }
+
+  /* ---- negative themes bars ---- */
+  var themes = [
+    ['Service & returns', 25], ['Broke / stopped working', 20], ['Price / value', 18],
+    ['Loud / noise', 14], ['Texture / icy', 9], ['Size / counter space', 7],
+    ['Melts / not cold', 6], ['Cleaning', 4]
+  ];
+  function drawThemes(){
+    var ink = v('--ink'), ink2 = v('--ink-2'), acc = v('--accent'), bad = v('--bad');
+    var W = 940, rowH = 36, padL = 210, padR = 70;
+    var H = themes.length * rowH + 8;
+    var max = 25;
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto" role="img" aria-label="Negative review themes">';
+    themes.forEach(function(t, i){
+      var y = i * rowH + 6, bw = (t[1] / max) * (W - padL - padR);
+      var col = i < 2 ? bad : acc;
+      s += '<text x="0" y="' + (y + 15) + '" font-size="13.5" fill="' + ink + '">' + t[0] + '</text>' +
+           '<path d="M' + padL + ' ' + y + ' h' + Math.max(bw - 4, 1) + ' a4 4 0 0 1 4 4 v14 a4 4 0 0 1 -4 4 h-' + Math.max(bw - 4, 1) + ' z" fill="' + col + '" data-tip="' + t[0] + ': ' + t[1] + ' of 109 negative reviews"/>' +
+           '<text x="' + (padL + bw + 8) + '" y="' + (y + 15) + '" font-size="13" font-weight="700" fill="' + ink2 + '">' + t[1] + '</text>';
+    });
+    s += '</svg>';
+    document.getElementById('chart-themes').innerHTML = s;
+  }
+
+  /* ---- scorecard table ---- */
+  var score = [
+    ['CREAMi Deluxe', 915, 4.70, '7%', 'Volume leader. Reliability and returns drive the negatives.'],
+    ['CREAMi (original)', 395, 4.69, '6%', 'Steady franchise anchor, four years in.'],
+    ['Scoop & Swirl (2025)', 289, 4.66, '7%', 'Healthy launch. Noise is the top new complaint.'],
+    ['SLUSHi XL (2026)', 138, 4.86, '2%', 'Strongest launch in the set.'],
+    ['BlendBOSS (2026)', 84, 4.89, '1%', 'Near-spotless early read.'],
+    ['AutoBarista (2026)', 123, 4.54, '11%', 'Watch item. Weakest early read of the six.']
+  ];
+  document.getElementById('scorecard').innerHTML = score.map(function(r){
+    var flag = parseFloat(r[3]) >= 10 ? ' <span class="pill bad">watch</span>' : '';
+    return '<tr><td>' + r[0] + flag + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2].toFixed(2) + '</td><td class="num">' + r[3] + '</td><td style="color:var(--ink-2)">' + r[4] + '</td></tr>';
+  }).join('');
+
+  /* ---- price spread ---- */
+  var prices = [
+    { p:'CREAMi (base)',   d:{ 'Amazon':197.99, 'Walmart':149.00, 'Best Buy':229.99, 'Target':229.99 } },
+    { p:'SLUSHi (72 oz)',  d:{ 'Amazon':299.00, 'Walmart':199.00, 'Target':299.99 } },
+    { p:'Scoop & Swirl',   d:{ 'Amazon':279.00, 'Walmart':279.00, 'Best Buy':279.99 } },
+    { p:'CREAMi Deluxe',   d:{ 'Amazon':249.95, 'Best Buy':249.99, 'Target':249.99 } },
+    { p:'SLUSHi XL',       d:{ 'Amazon':349.99, 'Walmart':349.00 } }
+  ];
+  function drawPrice(){
+    var C = retColors(), ink = v('--ink'), ink2 = v('--ink-2'), line = v('--line'), card = v('--card');
+    var W = 940, rowH = 52, padL = 150, padR = 40, padT = 26;
+    var H = padT + prices.length * rowH + 34;
+    var x0 = 140, x1 = 360;
+    function X(val){ return padL + (val - x0) / (x1 - x0) * (W - padL - padR); }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto" role="img" aria-label="Listed price by retailer per product">';
+    for (var t = 150; t <= 350; t += 50) {
+      s += '<line x1="' + X(t) + '" y1="' + padT + '" x2="' + X(t) + '" y2="' + (H - 30) + '" stroke="' + line + '" stroke-width="1"/>' +
+           '<text x="' + X(t) + '" y="' + (H - 12) + '" font-size="12" fill="' + ink2 + '" text-anchor="middle">$' + t + '</text>';
+    }
+    prices.forEach(function(row, i){
+      var y = padT + i * rowH + rowH / 2;
+      s += '<text x="0" y="' + (y + 4) + '" font-size="13.5" font-weight="600" fill="' + ink + '">' + row.p + '</text>';
+      var vals = Object.keys(row.d).map(function(r){ return row.d[r]; });
+      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      s += '<line x1="' + X(lo) + '" y1="' + y + '" x2="' + X(hi) + '" y2="' + y + '" stroke="' + line + '" stroke-width="2"/>';
+      RET.forEach(function(r, k){
+        if (row.d[r] == null) return;
+        s += '<circle cx="' + X(row.d[r]) + '" cy="' + y + '" r="7" fill="' + C[k] + '" stroke="' + card + '" stroke-width="2" data-tip="' + r + ': $' + row.d[r].toFixed(2) + '"/>';
+      });
+      if (hi - lo >= 5) {
+        s += '<text x="' + (X(hi) + 12) + '" y="' + (y + 4) + '" font-size="12.5" font-weight="700" fill="' + v('--bad') + '">$' + (hi - lo).toFixed(0) + '</text>';
+      }
+    });
+    s += '</svg>';
+    document.getElementById('chart-price').innerHTML = s;
+  }
+
+  function drawAll(){
+    legend('leg-gap'); legend('leg-price');
+    drawGap(); drawThemes(); drawPrice();
+  }
+  drawAll();
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawAll);
+  }
+
+  document.body.addEventListener('mousemove', function(e){
+    var t = e.target.closest && e.target.closest('[data-tip]');
+    if (t) showTip(e, t.getAttribute('data-tip')); else hideTip();
+  });
+})();
+</script>
+</body>
+</html>
