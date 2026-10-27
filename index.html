@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --bg-2:#f6f4f0; --paper:#eeebe6;
-  --shell:rgba(20,20,20,.04); --hairline:rgba(20,20,20,.07);
-  --card:#ffffff; --ink:#141414; --ink-2:#52514e; --ink-3:#8a877f;
+  --bg:#fbfaf8; --bg-top:#ffffff; --bg-bot:#e8e6e0; --bg-2:#f6f4f0; --paper:#eeebe6;
+  --shell:rgba(20,20,20,.055); --hairline:rgba(20,20,20,.11);
+  --card:#ffffff; --ink:#141414; --ink-2:#45443f; --ink-3:#7d7a73;
   --accent:#33785d; --accent-soft:#e3ece7;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
   --bad:#c0392b; --bad-soft:rgba(192,57,43,.09);
@@ -25,8 +25,8 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0e0e0d; --bg-2:#141413; --paper:#1a1a19;
-    --shell:rgba(255,255,255,.05); --hairline:rgba(255,255,255,.09);
+    --bg:#0e0e0d; --bg-top:#161615; --bg-bot:#090908; --bg-2:#141413; --paper:#1a1a19;
+    --shell:rgba(255,255,255,.06); --hairline:rgba(255,255,255,.12);
     --card:#191918; --ink:#f0efec; --ink-2:#c3c2b7; --ink-3:#8f8d84;
     --accent:#4e9a7b; --accent-soft:#1f2d27;
     --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
@@ -38,7 +38,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bot) 100%) fixed;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 /* ---------- floating island toolbar ---------- */
 .island-wrap{position:sticky;top:0;z-index:40;display:flex;justify-content:center;padding:18px 14px 6px;pointer-events:none}
@@ -153,9 +153,9 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
     <span class="logo"><img src="sharkninja-logo.svg" alt="SharkNinja"></span>
     <span class="sep" aria-hidden="true"></span>
     <span class="mark">LAUNCH<b>/</b>WATCH</span>
-    <button class="tab on" data-m="reviews" role="tab">Reviews</button>
-    <button class="tab" data-m="shelf" role="tab">Shelf</button>
-    <button class="tab" data-m="method" role="tab">Method</button>
+    <button class="tab on" data-m="reviews" role="tab">Customer reviews</button>
+    <button class="tab" data-m="shelf" role="tab">Prices &amp; stock</button>
+    <button class="tab" data-m="method" role="tab">How it works</button>
     <span class="sep" aria-hidden="true"></span>
     <a class="cta" href="brief.pdf" target="_blank" rel="noopener">The brief<span class="orb">&#8599;</span></a>
   </nav>
@@ -163,67 +163,68 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
 
 <div class="wrap">
   <header class="hero">
-    <span class="eyebrow reveal"><i></i>Retail intelligence · 100% public data · October 27, 2026</span>
-    <h1 class="reveal">Your newest launches are winning. <span class="dim">Amazon is where the stars leak.</span></h1>
-    <p class="byline reveal">1,944 reviews read and 4 retail shelves audited for six SharkNinja launches. A work sample for the <b>Applied AI &amp; Analytics Co-op</b> by <b>Bill Enright</b>.</p>
+    <span class="eyebrow reveal"><i></i>Live dashboard · public data · October 27, 2026</span>
+    <h1 class="reveal">What customers say about SharkNinja's 6 newest products, <span class="dim">at all 4 big retailers.</span></h1>
+    <p class="byline reveal">This dashboard reads every customer review (1,944 so far) and checks the price of each product at Amazon, Walmart, Best Buy, and Target. It found 3 problems: Amazon shoppers rate the same machines 0.4 stars lower, broken units and hard returns cause most bad reviews, and prices drift up to $101 between stores. <b>Bill Enright</b> built it as a work sample for the <b>Applied AI &amp; Analytics Co-op</b>.</p>
   </header>
 
   <div class="bento">
     <div class="shellbox b1 reveal"><div class="corebox metric">
-      <span class="tag bad">The gap</span>
+      <span class="tag bad">Rating gap</span>
       <div class="k">0.40<small>&nbsp;stars</small></div>
-      <div class="lbl">lost between Best Buy (4.70) and Amazon (4.30) on identical machines. Amazon is the first shelf most shoppers see.</div>
+      <div class="lbl">Amazon shoppers rate the same machines 4.30. Best Buy shoppers rate them 4.70. Amazon reaches the most buyers.</div>
     </div></div>
     <div class="shellbox b2 reveal"><div class="corebox metric">
-      <span class="tag bad">The why</span>
+      <span class="tag bad">Root cause</span>
       <div class="k">41<small>%</small></div>
-      <div class="lbl">of negative Creami reviews cite reliability or returns. Only 8 percent complain about taste.</div>
+      <div class="lbl">of bad Creami reviews describe a broken unit or a failed return. Only 8 percent complain about the ice cream.</div>
     </div></div>
     <div class="shellbox b3 reveal"><div class="corebox metric">
-      <span class="tag">The corpus</span>
+      <span class="tag">Data</span>
       <div class="k">1,944</div>
-      <div class="lbl">reviews read end to end by one agentic pipeline.</div>
+      <div class="lbl">full review texts collected and classified, plus 14,000 more ratings cross-checked.</div>
     </div></div>
     <div class="shellbox b4 reveal"><div class="corebox metric">
-      <span class="tag">Discipline</span>
+      <span class="tag">Pricing, good</span>
       <div class="k">$0.99</div>
-      <div class="lbl">Scoop &amp; Swirl price spread across every channel.</div>
+      <div class="lbl">Scoop &amp; Swirl costs almost the same at every store. This is the target.</div>
     </div></div>
     <div class="shellbox b5 reveal"><div class="corebox metric">
-      <span class="tag bad">Dispersion</span>
+      <span class="tag bad">Pricing, bad</span>
       <div class="k">$100.99</div>
-      <div class="lbl">SLUSHi price spread across retailers. Base CREAMi spans $80.99.</div>
+      <div class="lbl">SLUSHi costs $199 at Walmart and $299.99 at Target. The base CREAMi spreads $80.99.</div>
     </div></div>
     <div class="shellbox b6 reveal"><div class="corebox metric">
-      <span class="tag bad">Hygiene</span>
+      <span class="tag bad">Search results</span>
       <div class="k">3.8<small>&nbsp;stars</small></div>
-      <div class="lbl">refurb and third-party bundle listings ranking top-5 in Walmart search, above the 4.5-star hero SKUs.</div>
+      <div class="lbl">Walmart search shows 3.8-star refurb and bundle listings above the 4.5-star official products.</div>
     </div></div>
   </div>
 
   <!-- REVIEWS -->
+  <div id="content"></div>
   <section class="module on" id="m-reviews">
     <div class="panel shellbox reveal"><div class="corebox">
-      <h2>The channel rating gap</h2>
-      <p class="sub">Average star rating for the same product, by retailer. The products are fine. The Amazon and Walmart experience is where stars are lost.</p>
+      <h2>Same product, different rating at each store</h2>
+      <p class="sub">Each row is one product. Each dot is that product's average star rating at one retailer. Best Buy buyers rate every product higher than Amazon and Walmart buyers rate it.</p>
       <div class="legend" id="leg-gap"></div>
       <div id="chart-gap"></div>
       <div class="src">Hover any dot for the rating and sample size.</div>
     </div></div>
 
     <div class="panel shellbox reveal"><div class="corebox">
-      <h2>Why people leave 1 to 3 stars</h2>
-      <p class="sub">Theme frequency across all 109 negative Creami-family reviews at Best Buy. A review can hit more than one theme.</p>
+      <h2>Why people leave bad reviews</h2>
+      <p class="sub">I read all 109 Creami reviews rated 3 stars or less and counted what each one complains about. One review can count toward several complaints.</p>
       <div id="chart-themes"></div>
-      <h3 style="margin-top:22px">In their words</h3>
+      <h3 style="margin-top:22px">Real reviews, word for word</h3>
       <div class="quote"><b>&ldquo;Hazard&rdquo;</b> &ldquo;Machine broke after about 10 uses. Started smoking and melted through plastic into ice cream.&rdquo;<div class="meta">CREAMi Deluxe · 1 star · Apr 2025 · flagged for quality triage</div></div>
       <div class="quote"><b>&ldquo;Dead in under ten uses&rdquo;</b> &ldquo;Only had it 6 months and it&rsquo;s fried and only used a handful of times.&rdquo;<div class="meta">CREAMi Deluxe · 2 stars · Mar 2025</div></div>
       <div class="quote"><b>&ldquo;Horrible&rdquo;</b> &ldquo;My machine stopped working and I cannot return it.&rdquo;<div class="meta">CREAMi Deluxe · 1 star · Oct 2024 · service friction, not product quality</div></div>
     </div></div>
 
     <div class="panel shellbox reveal"><div class="corebox">
-      <h2>Launch scorecard</h2>
-      <p class="sub">Best Buy review corpus per product. Negative = rated 3 stars or less.</p>
+      <h2>Report card: all 6 products</h2>
+      <p class="sub">Every Best Buy review per product. Negative means the buyer gave 3 stars or less.</p>
       <table>
         <thead><tr><th>Product</th><th class="num">Reviews</th><th class="num">Avg &#9733;</th><th class="num">Negative</th><th>Read</th></tr></thead>
         <tbody id="scorecard"></tbody>
@@ -235,7 +236,7 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
   <section class="module" id="m-shelf">
     <div class="panel shellbox reveal"><div class="corebox">
       <h2>Same machine, four prices</h2>
-      <p class="sub">Live listed price by retailer, October 27, 2026. Each dot is a retailer; the bar is the spread.</p>
+      <p class="sub">The listed price at each retailer on October 27, 2026. Each dot is a store. A long bar means the stores disagree on the price.</p>
       <div class="legend" id="leg-price"></div>
       <div id="chart-price"></div>
     </div></div>
@@ -256,30 +257,30 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
     </div></div>
 
     <div class="panel shellbox reveal"><div class="corebox">
-      <h2>Shelf hygiene flags</h2>
-      <div class="rec"><div class="no alert">01</div><div><h4>Walmart search puts 3.8-star listings above your heroes</h4><p>A third-party bundle (3.8&#9733;, 119 reviews) and a "Restored" unit (3.8&#9733;, 398 reviews) rank in the top five results for "ninja creami," above the 4.5-star NC301. First impression damage on the retailer with your biggest review volume.</p></div></div>
-      <div class="rec"><div class="no alert">02</div><div><h4>The $149 Walmart CREAMi undercuts every other channel by 24 to 35 percent</h4><p>If it is a planned rollback, Amazon and Target shoppers are seeing a worse deal on the same franchise entry point. If it is not planned, it is a price-integrity gap worth a conversation with the marketplace team.</p></div></div>
+      <h2>Two problems on the shelf</h2>
+      <div class="rec"><div class="no alert">01</div><div><h4>Walmart search ranks 3.8-star listings above the official products</h4><p>Search "ninja creami" on Walmart. A third-party bundle (3.8 stars, 119 reviews) and a "Restored" unit (3.8 stars, 398 reviews) appear in the top five, above the official 4.5-star machine. Shoppers see the weak listings first.</p></div></div>
+      <div class="rec"><div class="no alert">02</div><div><h4>Walmart sells the CREAMi for $149 while every other store charges $198 to $230</h4><p>If SharkNinja planned this rollback, Amazon and Target shoppers now see a worse deal on the same machine. If nobody planned it, the marketplace team should know today.</p></div></div>
     </div></div>
   </section>
 
   <!-- METHOD -->
   <section class="module" id="m-method">
     <div class="panel shellbox reveal"><div class="corebox">
-      <h2>How this was built</h2>
-      <p class="sub">One agentic pipeline, public data only, built in an afternoon with Claude Code.</p>
-      <div class="rec"><div class="no">01</div><div><h4>Collect</h4><p>Pulled all 1,944 customer reviews (full text, rating, date) for six 2024 to 2026 SharkNinja launches from Best Buy's public review API, plus live price, rating, and rank data from Amazon, Walmart, and Target product and search pages, and SharkNinja.com first-party pricing.</p></div></div>
-      <div class="rec"><div class="no">02</div><div><h4>Classify</h4><p>Clustered every negative review (3 stars or less) into complaint themes with a transparent keyword rubric. Every count on this page can be re-derived from the raw corpus; nothing is a black box.</p></div></div>
-      <div class="rec"><div class="no">03</div><div><h4>Compare</h4><p>Cross-checked Best Buy sentiment against Amazon rating histograms (5,571 ratings on Deluxe alone, 9 percent 1-star) and Walmart ratings to separate product problems from channel-experience problems.</p></div></div>
-      <div class="rec"><div class="no">04</div><div><h4>Recommend</h4><p>The same pipeline, run weekly inside SharkNinja, becomes an early-warning system: safety-language detection routed to quality triage, review-response queues for Amazon, and automated price-integrity alerts. That is the agentic workflow this co-op role describes.</p></div></div>
-      <h3 style="margin-top:20px">Limits, stated plainly</h3>
-      <p class="sub" style="margin-bottom:0">Review text depth comes from one retailer (Best Buy); Amazon and Walmart contribute headline stats, not full text. Prices are a point-in-time snapshot, and promotional rollbacks can explain part of any spread. Theme counts use keyword matching, so phrasing outside the rubric is missed. All of this is fixable with internal data access.</p>
+      <h2>How this works</h2>
+      <p class="sub">One AI pipeline built in an afternoon with Claude Code. It only touches public data.</p>
+      <div class="rec"><div class="no">01</div><div><h4>Collect</h4><p>The pipeline pulls all 1,944 reviews (full text, rating, date) for six SharkNinja launches from Best Buy's public review API. It also grabs the live price, rating, and search rank for each product at Amazon, Walmart, Target, and SharkNinja.com.</p></div></div>
+      <div class="rec"><div class="no">02</div><div><h4>Classify</h4><p>It sorts every bad review (3 stars or less) into complaint types using a keyword list anyone can audit. You can re-count every number on this page from the raw reviews.</p></div></div>
+      <div class="rec"><div class="no">03</div><div><h4>Compare</h4><p>It checks Best Buy sentiment against Amazon's rating breakdowns (5,571 ratings on the Deluxe alone, 9 percent 1-star) and Walmart's ratings. That separates product problems from store-experience problems.</p></div></div>
+      <div class="rec"><div class="no">04</div><div><h4>Repeat weekly</h4><p>Run this inside SharkNinja every week and it becomes an alarm system: safety complaints go straight to the quality team, bad Amazon reviews get a response queue, and price gaps trigger alerts. The co-op job description asks for exactly this kind of workflow.</p></div></div>
+      <h3 style="margin-top:20px">What this misses</h3>
+      <p class="sub" style="margin-bottom:0">Full review text comes from one retailer, Best Buy. Amazon and Walmart only share headline stats. Prices are one day's snapshot, and a planned sale can explain part of a spread. Keyword matching misses complaints phrased in unusual ways. Internal data access fixes all of this.</p>
     </div></div>
 
     <div class="panel shellbox reveal"><div class="corebox">
-      <h2>Recommendations</h2>
-      <div class="rec"><div class="no">01</div><div><h4>Close the Amazon experience gap</h4><p>Same machines rate 4.7 at Best Buy and 4.3 on Amazon, where 5 to 10 times more shoppers look first. Reliability and return friction, not taste, drive 41 percent of negatives. A review-response and returns-experience push on Amazon is the highest-leverage star you can buy back.</p></div></div>
-      <div class="rec"><div class="no">02</div><div><h4>Auto-triage safety language</h4><p>Reviews like "started smoking and melted through plastic" should reach the quality team the day they post, not whenever someone reads page 14. A classifier on the review feed does this for every SKU, every day.</p></div></div>
-      <div class="rec"><div class="no">03</div><div><h4>Run a standing price-integrity sweep</h4><p>Scoop &amp; Swirl holds a $0.99 spread across channels. The base CREAMi and SLUSHi do not ($80.99 and $100.99). The discipline exists; the monitoring to enforce it everywhere is a small agent away.</p></div></div>
+      <h2>What I would fix first</h2>
+      <div class="rec"><div class="no">01</div><div><h4>Fix the Amazon experience</h4><p>The same machines rate 4.7 at Best Buy and 4.3 on Amazon, where far more shoppers look first. Broken units and hard returns cause 41 percent of the bad reviews. Answer those reviews and smooth the returns process, and the rating follows.</p></div></div>
+      <div class="rec"><div class="no">02</div><div><h4>Route safety complaints the day they post</h4><p>A review that says "started smoking and melted through plastic" should reach the quality team that day, not when someone reads page 14. A classifier on the review feed does this for every product, every day.</p></div></div>
+      <div class="rec"><div class="no">03</div><div><h4>Alert on price gaps</h4><p>Scoop &amp; Swirl holds a $0.99 spread across stores, so SharkNinja can clearly do this. The base CREAMi ($80.99) and SLUSHi ($100.99) show nobody watches the other products. A small monitoring agent closes that gap.</p></div></div>
     </div></div>
   </section>
 
@@ -287,9 +288,8 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
     <div class="foot-cta">
       <a class="cta" href="brief.pdf" target="_blank" rel="noopener">Download the one-page brief<span class="orb">&#8599;</span></a>
     </div>
-    Independent work sample by Bill Enright (enright.wi@northeastern.edu). Not affiliated with, commissioned by, or endorsed by SharkNinja; the SharkNinja name and logo appear solely to identify the subject of this analysis.
-    All data from public retail pages on October 27, 2026. Quotes are verbatim customer reviews from BestBuy.com.
-    Format modeled on the McKinsey "In Brief" one-page insight layout, cited among top executive-summary templates by ClickUp.
+    Bill Enright (enright.wi@northeastern.edu) built this as an independent work sample. SharkNinja did not commission or endorse it; the name and logo only identify the subject of the analysis.
+    All data comes from public retail pages on October 27, 2026. The quotes are word-for-word customer reviews from BestBuy.com.
   </footer>
 </div>
 <div id="tip" role="status"></div>
@@ -309,6 +309,7 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
         m.classList.toggle('on', m.id === 'm-' + b.dataset.m);
       });
       document.querySelectorAll('section.module.on .reveal').forEach(function(el){ el.classList.add('in'); });
+      document.getElementById('content').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
@@ -406,12 +407,12 @@ footer .foot-cta{margin-bottom:18px;display:flex;gap:10px;flex-wrap:wrap}
 
   /* ---- scorecard table ---- */
   var score = [
-    ['CREAMi Deluxe', 915, 4.70, '7%', 'Volume leader. Reliability and returns drive the negatives.'],
-    ['CREAMi (original)', 395, 4.69, '6%', 'Steady franchise anchor, four years in.'],
-    ['Scoop & Swirl (2025)', 289, 4.66, '7%', 'Healthy launch. Noise is the top new complaint.'],
-    ['SLUSHi XL (2026)', 138, 4.86, '2%', 'Strongest launch in the set.'],
-    ['BlendBOSS (2026)', 84, 4.89, '1%', 'Near-spotless early read.'],
-    ['AutoBarista (2026)', 123, 4.54, '11%', 'Watch item. Weakest early read of the six.']
+    ['CREAMi Deluxe', 915, 4.70, '7%', 'Sells the most. Broken units and returns cause the bad reviews.'],
+    ['CREAMi (original)', 395, 4.69, '6%', 'Still steady after four years.'],
+    ['Scoop & Swirl (2025)', 289, 4.66, '7%', 'Healthy launch. Buyers complain most about noise.'],
+    ['SLUSHi XL (2026)', 138, 4.86, '2%', 'Strongest launch of the six.'],
+    ['BlendBOSS (2026)', 84, 4.89, '1%', 'One bad review in 84.'],
+    ['AutoBarista (2026)', 123, 4.54, '11%', 'Weakest of the six. Watch it.']
   ];
   document.getElementById('scorecard').innerHTML = score.map(function(r){
     var flag = parseFloat(r[3]) >= 10 ? ' <span class="pill bad">watch</span>' : '';
